@@ -1,0 +1,80 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat with DB — Connect</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Connect Your Database & AI</h1>
+    <p class="subtitle">Self-hosted Text-to-SQL workspace. Use a read-only database user.</p>
+
+    <form id="connect-form">
+      <section class="card">
+        <h2>1. Database Credentials</h2>
+
+        <label>Database Type
+          <select id="db_type" name="db_type" required>
+            <option value="postgres">PostgreSQL / Supabase</option>
+            <option value="mysql">MySQL / MariaDB</option>
+          </select>
+        </label>
+
+        <div class="row">
+          <label>Host
+            <input type="text" name="host" placeholder="db.example.com" required />
+          </label>
+          <label>Port
+            <input type="number" id="port" name="port" value="5432" required />
+          </label>
+        </div>
+
+        <label>Database Name
+          <input type="text" name="database" placeholder="postgres" required />
+        </label>
+
+        <div class="row">
+          <label>Username (Read-Only Recommended)
+            <input type="text" name="username" placeholder="readonly_user" required />
+          </label>
+          <label>Password
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" name="ssl" checked /> Use SSL connection
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>2. AI Model Integration</h2>
+
+        <label>AI Provider
+          <select id="ai_provider" name="ai_provider" required>
+            <option value="gemini">Google Gemini (Free Tier Available)</option>
+            <option value="openrouter">OpenRouter (Free & Open Models)</option>
+            <option value="openai">OpenAI</option>
+          </select>
+        </label>
+
+        <label>API Key
+          <input type="password" name="api_key" placeholder="Paste your API key" required />
+        </label>
+
+        <label>Model Name (Optional)
+          <input type="text" id="ai_model" name="ai_model" placeholder="Leave blank for default" />
+        </label>
+      </section>
+
+      <button type="submit" id="connect-btn">Test & Connect</button>
+      <p id="status-msg" role="status"></p>
+    </form>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

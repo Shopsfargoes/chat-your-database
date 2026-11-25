@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat with Database</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="chat-shell">
+    <header class="chat-header">
+        <div>
+          <h1>Chat with Database</h1>
+          <div class="workspace-bar">
+            <select id="workspace-select" aria-label="Switch connected database workspace">
+              <option value="">Loading workspaces...</option>
+            </select>
+            <button type="button" id="delete-workspace-btn" class="danger-btn">
+              Delete
+            </button>
+          </div>
+          <p id="workspace-badge" class="badge">Workspace: none selected</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button type="button" id="open-ai-modal-btn" class="secondary-btn" style="border: none; cursor: pointer;">
+            AI Settings
+          </button>
+          <button type="button" id="refresh-schema-btn" class="secondary-btn" style="border: none; cursor: pointer;">
+            Refresh Schema
+          </button>
+          <a href="/index.html" class="secondary-btn">+ New DB</a>
+        </div>
+      </header>
+
+    <main id="messages" class="messages" aria-live="polite">
+      <div class="message assistant">
+        <p class="answer">Ask a question about your connected database—for example, "How many orders were placed this week?" or "Top 5 customers by total spend."</p>
+      </div>
+    </main>
+    <div id="suggestion-chips" class="chips-bar" aria-label="Example questions"></div>
+    <form id="chat-form" class="composer">
+      <input
+        type="text"
+        id="question-input"
+        name="question"
+        placeholder="Ask a question about your data..."
+        autocomplete="off"
+        required
+      />
+      <button type="submit" id="send-btn">Ask</button>
+    </form>
+  </div>
+
+  <!-- AI Settings Modal -->
+  <dialog id="ai-modal" class="modal">
+    <form id="ai-settings-form" class="modal-card">
+      <div class="modal-header">
+        <h2>Update AI Model &amp; Key</h2>
+        <button type="button" id="close-ai-modal-btn" class="icon-btn" aria-label="Close">✕</button>
+      </div>
+
+      <p class="modal-hint">Switch providers or models without re-entering database credentials.</p>
+
+      <label class="field">
+        <span>AI Provider</span>
+        <select id="modal-ai-provider" name="ai_provider">
+          <option value="">Keep current provider</option>
+          <option value="gemini">Google Gemini (Free Tier Available)</option>
+          <option value="openrouter">OpenRouter (Free &amp; Open Models)</option>
+          <option value="openai">OpenAI</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Model Name (Leave blank to use provider default)</span>
+        <input
+          type="text"
+          id="modal-ai-model"
+          name="ai_model"
+          placeholder="e.g. gemini-3.8-flash, openrouter/free, gpt-6-luna"
+        />
+      </label>
+
+      <label class="field">
+        <span>New API Key (Leave blank to keep existing key)</span>
+        <input
+          type="password"
+          id="modal-api-key"
+          name="api_key"
+          placeholder="Paste new API key if changing"
+          autocomplete="new-password"
+        />
+      </label>
+
+      <p id="ai-modal-status" class="modal-status" role="status"></p>
+
+      <div class="modal-actions">
+        <button type="button" id="cancel-ai-modal-btn" class="secondary-btn" style="border: none; cursor: pointer;">
+          Cancel
+        </button>
+        <button type="submit" id="save-ai-btn" class="primary-btn">
+          Save AI Settings
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/chat.js"></script>
+</body>
+</html>
